@@ -141,7 +141,7 @@
       this.projectId = config.projectId;
       this.user = config.user;
       this.signature = config.signature;
-      this.baseUrl = config.apiUrl || "https://api.wpfeatureloop.io/v1";
+      this.baseUrl = config.apiUrl || "https://api.wpfeatureloop.com/api/v1";
     }
 
     /**
