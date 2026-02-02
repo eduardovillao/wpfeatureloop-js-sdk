@@ -16,6 +16,7 @@ A feature voting widget SDK for WordPress plugins. Allow your users to view, sug
 - **Multi-language** - Built-in support for English and Portuguese (pt-BR)
 - **Zero Dependencies** - Pure vanilla JavaScript, no runtime dependencies
 - **Lightweight** - Small bundle size, optimized for performance
+- **Single Import** - CSS is automatically injected, no separate stylesheet needed
 
 ## Installation
 
@@ -34,15 +35,10 @@ yarn add wpfeatureloop-sdk
 ### CDN
 
 ```html
-<!-- CSS -->
-<link
-    rel="stylesheet"
-    href="https://unpkg.com/wpfeatureloop-sdk/dist/wpfeatureloop.min.css"
-/>
-
-<!-- JavaScript -->
-<script src="https://unpkg.com/wpfeatureloop-sdk/dist/wpfeatureloop.umd.js"></script>
+<script src="https://unpkg.com/wpfeatureloop-sdk"></script>
 ```
+
+> **Note:** CSS is automatically injected when the SDK loads. No separate stylesheet import needed.
 
 ## Quick Start
 
@@ -56,7 +52,6 @@ yarn add wpfeatureloop-sdk
 
 ```javascript
 import WPFeatureLoop from "wpfeatureloop-sdk";
-import "wpfeatureloop-sdk/dist/wpfeatureloop.css";
 
 const widget = WPFeatureLoop.init({
     container: "#feature-widget",
