@@ -30,6 +30,10 @@
   ],
   "author": "",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eduardovillao/wpfeatureloop-js-sdk/issues"
+  },
+  "homepage": "https://github.com/eduardovillao/wpfeatureloop-js-sdk",
   "devDependencies": {
     "happy-dom": "^13.3.8",
     "lightningcss-cli": "^1.23.0",
