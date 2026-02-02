@@ -1,8 +1,8 @@
 # WPFeatureLoop SDK
 
-[![npm version](https://img.shields.io/npm/v/@wpfeatureloop/sdk.svg)](https://www.npmjs.com/package/@wpfeatureloop/sdk)
-[![license](https://img.shields.io/npm/l/@wpfeatureloop/sdk.svg)](https://github.com/eduardovillao/wpfeatureloop-js-sdk/blob/main/LICENSE)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/@wpfeatureloop/sdk)](https://bundlephobia.com/package/@wpfeatureloop/sdk)
+[![npm version](https://img.shields.io/npm/v/wpfeatureloop-sdk.svg)](https://www.npmjs.com/package/wpfeatureloop-sdk)
+[![license](https://img.shields.io/npm/l/wpfeatureloop-sdk.svg)](https://github.com/eduardovillao/wpfeatureloop-js-sdk/blob/main/LICENSE)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/wpfeatureloop-sdk)](https://bundlephobia.com/package/wpfeatureloop-sdk)
 
 A feature voting widget SDK for WordPress plugins. Allow your users to view, suggest, vote on, and comment on feature requests in a beautiful roadmap interface.
 
@@ -22,13 +22,13 @@ A feature voting widget SDK for WordPress plugins. Allow your users to view, sug
 ### NPM
 
 ```bash
-npm install @wpfeatureloop/sdk
+npm install wpfeatureloop-sdk
 ```
 
 ### Yarn
 
 ```bash
-yarn add @wpfeatureloop/sdk
+yarn add wpfeatureloop-sdk
 ```
 
 ### CDN
@@ -37,11 +37,11 @@ yarn add @wpfeatureloop/sdk
 <!-- CSS -->
 <link
     rel="stylesheet"
-    href="https://unpkg.com/@wpfeatureloop/sdk/dist/wpfeatureloop.min.css"
+    href="https://unpkg.com/wpfeatureloop-sdk/dist/wpfeatureloop.min.css"
 />
 
 <!-- JavaScript -->
-<script src="https://unpkg.com/@wpfeatureloop/sdk/dist/wpfeatureloop.umd.js"></script>
+<script src="https://unpkg.com/wpfeatureloop-sdk/dist/wpfeatureloop.umd.js"></script>
 ```
 
 ## Quick Start
@@ -55,8 +55,8 @@ yarn add @wpfeatureloop/sdk
 ### JavaScript
 
 ```javascript
-import WPFeatureLoop from "@wpfeatureloop/sdk";
-import "@wpfeatureloop/sdk/dist/wpfeatureloop.css";
+import WPFeatureLoop from "wpfeatureloop-sdk";
+import "wpfeatureloop-sdk/dist/wpfeatureloop.css";
 
 const widget = WPFeatureLoop.init({
     container: "#feature-widget",
@@ -237,5 +237,5 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## Links
 
 - [GitHub Repository](https://github.com/eduardovillao/wpfeatureloop-js-sdk)
-- [NPM Package](https://www.npmjs.com/package/@wpfeatureloop/sdk)
+- [NPM Package](https://www.npmjs.com/package/wpfeatureloop-sdk)
 - [Report Issues](https://github.com/eduardovillao/wpfeatureloop-js-sdk/issues)
