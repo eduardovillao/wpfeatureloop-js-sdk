@@ -2,7 +2,7 @@
  * WPFeatureLoop SDK
  * A feature voting widget for WordPress plugins
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @license MIT
  */
 
@@ -133,7 +133,7 @@
 
   /**
    * API Service
-   * Handles all API communication (fake data for now)
+   * Handles all API communication
    */
   class ApiService {
     constructor(config) {
@@ -145,13 +145,6 @@
     }
 
     /**
-     * Simulate API delay
-     */
-    async _simulateDelay(ms = 800) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-
-    /**
      * Get headers for API requests
      */
     _getHeaders() {
@@ -160,8 +153,23 @@
         "X-Public-Key": this.publicKey,
         "X-Project-Id": this.projectId,
         "X-User-Id": this.user?.id?.toString() || "",
+        "X-User-Name": this.user?.name || "",
         "X-Signature": this.signature || "",
       };
+    }
+
+    /**
+     * Handle API response
+     */
+    async _handleResponse(response) {
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        const error = new Error(data.error || `HTTP error ${response.status}`);
+        error.status = response.status;
+        error.data = data;
+        throw error;
+      }
+      return response.json();
     }
 
     /**
@@ -169,204 +177,54 @@
      * @returns {Promise<Array>}
      */
     async getFeatures() {
-      await this._simulateDelay();
-
-      // TODO: Replace with real API call
-      // const response = await fetch(`${this.baseUrl}/features`, {
-      //   method: 'GET',
-      //   headers: this._getHeaders()
-      // });
-      // return response.json();
-
-      // Fake data for now
-      return [
-        {
-          id: 1,
-          title: "Dark Mode Support",
-          description:
-            "Add a dark mode theme option that follows system preferences or can be toggled manually. Essential for users who work at night or prefer darker interfaces.",
-          votes: 47,
-          userVote: null,
-          status: "planned",
-          commentsCount: 2,
-          tags: ["UI/UX"],
-          createdAt: "2024-01-15T10:00:00Z",
-        },
-        {
-          id: 2,
-          title: "Export Data to CSV",
-          description:
-            "Allow users to export all their data in CSV format for backup or migration purposes. Include options to select specific date ranges and data types.",
-          votes: 32,
-          userVote: null,
-          status: "progress",
-          commentsCount: 1,
-          tags: ["Data"],
-          createdAt: "2024-01-10T14:30:00Z",
-        },
-        {
-          id: 3,
-          title: "API Webhooks",
-          description:
-            "Implement webhooks to notify external services when certain events occur, like new submissions or status changes.",
-          votes: 28,
-          userVote: "up",
-          status: "open",
-          commentsCount: 5,
-          tags: ["Integration"],
-          createdAt: "2024-01-08T09:15:00Z",
-        },
-        {
-          id: 4,
-          title: "Multi-language Support",
-          description:
-            "Add support for multiple languages to make the plugin accessible to users worldwide.",
-          votes: 15,
-          userVote: null,
-          status: "open",
-          commentsCount: 0,
-          tags: ["i18n"],
-          createdAt: "2024-01-05T16:45:00Z",
-        },
-      ];
+      const response = await fetch(`${this.baseUrl}/features`, {
+        method: "GET",
+        headers: this._getHeaders(),
+      });
+      return this._handleResponse(response);
     }
 
     /**
      * Vote on a feature
-     * @param {number} featureId
+     * @param {string} featureId
      * @param {string} voteType - 'up', 'down', or 'none'
      * @returns {Promise<Object>}
      */
     async vote(featureId, voteType) {
-      await this._simulateDelay(300);
-
-      // TODO: Replace with real API call
-      // const response = await fetch(`${this.baseUrl}/features/${featureId}/vote`, {
-      //   method: 'POST',
-      //   headers: this._getHeaders(),
-      //   body: JSON.stringify({ vote: voteType })
-      // });
-      // return response.json();
-
-      return { success: true, featureId, voteType };
+      const response = await fetch(`${this.baseUrl}/features/${featureId}/vote`, {
+        method: "POST",
+        headers: this._getHeaders(),
+        body: JSON.stringify({ vote: voteType }),
+      });
+      return this._handleResponse(response);
     }
 
     /**
      * Get comments for a feature
-     * @param {number} featureId
+     * @param {string} featureId
      * @returns {Promise<Array>}
      */
     async getComments(featureId) {
-      await this._simulateDelay(500);
-
-      // TODO: Replace with real API call
-      // const response = await fetch(`${this.baseUrl}/features/${featureId}/comments`, {
-      //   method: 'GET',
-      //   headers: this._getHeaders()
-      // });
-      // return response.json();
-
-      // Fake data based on feature
-      const commentsMap = {
-        1: [
-          {
-            id: 1,
-            author: "Sarah M.",
-            initials: "SM",
-            text: "This would be amazing! My eyes would thank you.",
-            time: "2 days ago",
-          },
-          {
-            id: 2,
-            author: "Dev Team",
-            initials: "DT",
-            text: "We're planning this for the next major release!",
-            time: "1 day ago",
-          },
-        ],
-        2: [
-          {
-            id: 1,
-            author: "Mike R.",
-            initials: "MR",
-            text: "Need this for compliance reporting!",
-            time: "5 days ago",
-          },
-        ],
-        3: [
-          {
-            id: 1,
-            author: "John D.",
-            initials: "JD",
-            text: "Would love to integrate with Zapier!",
-            time: "1 week ago",
-          },
-          {
-            id: 2,
-            author: "Anna K.",
-            initials: "AK",
-            text: "Slack integration would be great too.",
-            time: "6 days ago",
-          },
-          {
-            id: 3,
-            author: "Dev Team",
-            initials: "DT",
-            text: "Great suggestions! Adding to our roadmap.",
-            time: "5 days ago",
-          },
-          {
-            id: 4,
-            author: "Peter S.",
-            initials: "PS",
-            text: "Any ETA on this?",
-            time: "3 days ago",
-          },
-          {
-            id: 5,
-            author: "Dev Team",
-            initials: "DT",
-            text: "Targeting Q2 2024!",
-            time: "2 days ago",
-          },
-        ],
-      };
-
-      return commentsMap[featureId] || [];
+      const response = await fetch(`${this.baseUrl}/features/${featureId}/comments`, {
+        method: "GET",
+        headers: this._getHeaders(),
+      });
+      return this._handleResponse(response);
     }
 
     /**
      * Add a comment to a feature
-     * @param {number} featureId
+     * @param {string} featureId
      * @param {string} text
      * @returns {Promise<Object>}
      */
     async addComment(featureId, text) {
-      await this._simulateDelay(400);
-
-      // TODO: Replace with real API call
-      // const response = await fetch(`${this.baseUrl}/features/${featureId}/comments`, {
-      //   method: 'POST',
-      //   headers: this._getHeaders(),
-      //   body: JSON.stringify({ text })
-      // });
-      // return response.json();
-
-      const userName = this.user?.name || "You";
-      const initials = userName
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2);
-
-      return {
-        id: Date.now(),
-        author: userName,
-        initials,
-        text,
-        time: "Just now",
-      };
+      const response = await fetch(`${this.baseUrl}/features/${featureId}/comments`, {
+        method: "POST",
+        headers: this._getHeaders(),
+        body: JSON.stringify({ text }),
+      });
+      return this._handleResponse(response);
     }
 
     /**
@@ -375,27 +233,15 @@
      * @returns {Promise<Object>}
      */
     async createFeature(feature) {
-      await this._simulateDelay(600);
-
-      // TODO: Replace with real API call
-      // const response = await fetch(`${this.baseUrl}/features`, {
-      //   method: 'POST',
-      //   headers: this._getHeaders(),
-      //   body: JSON.stringify(feature)
-      // });
-      // return response.json();
-
-      return {
-        id: Date.now(),
-        title: feature.title,
-        description: feature.description,
-        votes: 1,
-        userVote: "up",
-        status: "open",
-        commentsCount: 0,
-        tags: [feature.category || "General"],
-        createdAt: new Date().toISOString(),
-      };
+      const response = await fetch(`${this.baseUrl}/features`, {
+        method: "POST",
+        headers: this._getHeaders(),
+        body: JSON.stringify({
+          title: feature.title,
+          description: feature.description,
+        }),
+      });
+      return this._handleResponse(response);
     }
   }
 
@@ -648,7 +494,7 @@
                 ${icons.comment}
                 <span>${feature.commentsCount} ${commentText}</span>
               </button>
-              ${feature.tags.map((tag) => `<span class="wfl-tag">${tag}</span>`).join("")}
+              ${(feature.tags || []).map((tag) => `<span class="wfl-tag">${tag}</span>`).join("")}
             </div>
           </div>
         </div>
@@ -1026,9 +872,9 @@
      * Handle vote
      */
     async handleVote(btn) {
-      const id = parseInt(btn.dataset.id);
+      const id = btn.dataset.id;
       const action = btn.dataset.action;
-      const feature = this.features.find((f) => f.id === id);
+      const feature = this.features.find((f) => String(f.id) === String(id));
 
       if (!feature) return;
 
@@ -1040,6 +886,10 @@
       // Disable buttons during request
       upBtn.disabled = true;
       downBtn.disabled = true;
+
+      // Store original values for rollback
+      const originalVotes = feature.votes;
+      const originalUserVote = feature.userVote;
 
       // Calculate new vote state
       let newVoteType = "none";
@@ -1094,27 +944,33 @@
       }
 
       try {
-        await this.api.vote(id, newVoteType);
+        const result = await this.api.vote(id, newVoteType);
+
+        // Sync with server response
+        feature.votes = result.totalVotes;
+        feature.userVote = result.vote;
+        voteCount.textContent = feature.votes;
+        voteCount.classList.remove("wfl-vote-positive", "wfl-vote-negative");
+        if (feature.votes > 0) {
+          voteCount.classList.add("wfl-vote-positive");
+        } else if (feature.votes < 0) {
+          voteCount.classList.add("wfl-vote-negative");
+        }
       } catch (error) {
         console.error("WPFeatureLoop: Failed to save vote", error);
-        // Revert on error
-        feature.votes -= voteDelta;
-        feature.userVote =
-          action === "up"
-            ? voteDelta === -1
-              ? "up"
-              : voteDelta === 2
-                ? "down"
-                : null
-            : voteDelta === 1
-              ? "down"
-              : voteDelta === -2
-                ? "up"
-                : null;
+        // Revert to original values
+        feature.votes = originalVotes;
+        feature.userVote = originalUserVote;
 
         upBtn.classList.toggle("wfl-voted", feature.userVote === "up");
         downBtn.classList.toggle("wfl-voted", feature.userVote === "down");
         voteCount.textContent = feature.votes;
+        voteCount.classList.remove("wfl-vote-positive", "wfl-vote-negative");
+        if (feature.votes > 0) {
+          voteCount.classList.add("wfl-vote-positive");
+        } else if (feature.votes < 0) {
+          voteCount.classList.add("wfl-vote-negative");
+        }
 
         this.showToast(this.t.errorText, "error");
       } finally {
@@ -1215,7 +1071,7 @@
   /**
    * Version
    */
-  WPFeatureLoop.version = "1.0.0";
+  WPFeatureLoop.version = "1.1.0";
 
   return WPFeatureLoop;
 });
