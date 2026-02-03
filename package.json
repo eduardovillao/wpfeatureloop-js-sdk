@@ -1,6 +1,6 @@
 {
   "name": "wpfeatureloop-sdk",
-  "version": "1.2",
+  "version": "1.2.0",
   "type": "module",
   "description": "Feature voting widget SDK for WordPress plugins",
   "main": "dist/wpfeatureloop.umd.js",
