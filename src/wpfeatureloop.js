@@ -614,11 +614,12 @@
       return comments
         .map(
           (c) => `
-        <div class="wfl-comment">
-          <div class="wfl-comment-avatar">${c.initials}</div>
-          <div class="wfl-comment-content">
+        <div class="wfl-comment${c.isTeamReply ? ' wfl-comment-team' : ''}">
+          <div class="wfl-comment-avatar${c.isTeamReply ? ' wfl-comment-avatar-team' : ''}">${c.initials}</div>
+          <div class="wfl-comment-content${c.isTeamReply ? ' wfl-comment-content-team' : ''}">
             <div class="wfl-comment-header">
               <span class="wfl-comment-author">${c.author}</span>
+              ${c.isTeamReply ? '<span class="wfl-comment-team-badge">Team</span>' : ''}
               <span class="wfl-comment-time">${c.time}</span>
             </div>
             <p class="wfl-comment-text">${c.text}</p>

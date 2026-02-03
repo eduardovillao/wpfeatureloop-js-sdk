@@ -473,11 +473,12 @@ var E = F((C, b) => {
       renderCommentsList(t) {
         return t.length === 0 ? `<p style="text-align: center; color: var(--wfl-gray-500); padding: 20px;">${this.t.noComments}</p>` : t.map(
           (e) => `
-        <div class="wfl-comment">
-          <div class="wfl-comment-avatar">${e.initials}</div>
-          <div class="wfl-comment-content">
+        <div class="wfl-comment${e.isTeamReply ? " wfl-comment-team" : ""}">
+          <div class="wfl-comment-avatar${e.isTeamReply ? " wfl-comment-avatar-team" : ""}">${e.initials}</div>
+          <div class="wfl-comment-content${e.isTeamReply ? " wfl-comment-content-team" : ""}">
             <div class="wfl-comment-header">
               <span class="wfl-comment-author">${e.author}</span>
+              ${e.isTeamReply ? '<span class="wfl-comment-team-badge">Team</span>' : ""}
               <span class="wfl-comment-time">${e.time}</span>
             </div>
             <p class="wfl-comment-text">${e.text}</p>
@@ -582,22 +583,22 @@ var E = F((C, b) => {
         try {
           this.currentComments = await this.api.getComments(t), o.innerHTML = this.renderCommentsList(this.currentComments);
           const i = this, u = async () => {
-            const n = i.container.querySelector("#wfl-comment-input"), k = i.container.querySelector("#wfl-comment-submit"), L = n.value.trim();
-            if (L) {
+            const n = i.container.querySelector("#wfl-comment-input"), k = i.container.querySelector("#wfl-comment-submit"), $ = n.value.trim();
+            if ($) {
               k.disabled = !0;
               try {
-                const g = await i.api.addComment(t, L);
+                const g = await i.api.addComment(t, $);
                 i.currentComments.push(g), o.innerHTML = i.renderCommentsList(
                   i.currentComments
                 ), e.commentsCount = i.currentComments.length;
                 const x = i.container.querySelector(
                   `.wfl-card[data-id="${t}"]`
-                ), $ = x == null ? void 0 : x.querySelector(
+                ), L = x == null ? void 0 : x.querySelector(
                   ".wfl-comment-trigger span"
                 );
-                if ($) {
+                if (L) {
                   const T = e.commentsCount === 1 ? i.t.comment : i.t.comments;
-                  $.textContent = `${e.commentsCount} ${T}`;
+                  L.textContent = `${e.commentsCount} ${T}`;
                 }
                 n.value = "", i.showToast(i.t.commentAdded, "success");
               } catch (g) {

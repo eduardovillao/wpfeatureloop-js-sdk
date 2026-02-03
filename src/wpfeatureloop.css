@@ -667,6 +667,29 @@ input.wfl-input {
   line-height: 1.5;
 }
 
+/* Team reply styles */
+.wfl-comment-team-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, var(--wfl-primary) 0%, #8b5cf6 100%);
+  color: white;
+  border-radius: 4px;
+}
+
+.wfl-comment-avatar-team {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.wfl-comment-content-team {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
 .wfl-comment-input-wrapper {
   display: flex;
   gap: 12px;

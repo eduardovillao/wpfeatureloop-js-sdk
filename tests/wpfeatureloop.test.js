@@ -44,6 +44,7 @@ const mockComments = [
     initials: "SM",
     text: "This would be amazing!",
     time: "2 days ago",
+    isTeamReply: false,
   },
   {
     id: "comm_2",
@@ -51,6 +52,7 @@ const mockComments = [
     initials: "DT",
     text: "We're planning this for the next release!",
     time: "1 day ago",
+    isTeamReply: true,
   },
 ];
 
@@ -123,6 +125,7 @@ function createFetchMock() {
             initials: "TU",
             text: body.text,
             time: "Just now",
+            isTeamReply: false,
           }),
       });
     }
