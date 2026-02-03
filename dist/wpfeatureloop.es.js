@@ -96,7 +96,7 @@ var E = F((C, b) => {
     };
     class S {
       constructor(t) {
-        this.publicKey = t.publicKey, this.projectId = t.projectId, this.user = t.user, this.signature = t.signature, this.baseUrl = t.apiUrl || "https://api.wpfeatureloop.com/api/v1";
+        this.publicKey = t.publicKey, this.projectId = t.projectId, this.user = t.user, this.signature = t.signature, this.baseUrl = t.apiUrl || "https://app.wpfeatureloop.com/api/v1";
       }
       /**
        * Get headers for API requests
@@ -140,11 +140,14 @@ var E = F((C, b) => {
        * @returns {Promise<Object>}
        */
       async vote(t, e) {
-        const r = await fetch(`${this.baseUrl}/features/${t}/vote`, {
-          method: "POST",
-          headers: this._getHeaders(),
-          body: JSON.stringify({ vote: e })
-        });
+        const r = await fetch(
+          `${this.baseUrl}/features/${t}/vote`,
+          {
+            method: "POST",
+            headers: this._getHeaders(),
+            body: JSON.stringify({ vote: e })
+          }
+        );
         return this._handleResponse(r);
       }
       /**
@@ -153,10 +156,13 @@ var E = F((C, b) => {
        * @returns {Promise<Array>}
        */
       async getComments(t) {
-        const e = await fetch(`${this.baseUrl}/features/${t}/comments`, {
-          method: "GET",
-          headers: this._getHeaders()
-        });
+        const e = await fetch(
+          `${this.baseUrl}/features/${t}/comments`,
+          {
+            method: "GET",
+            headers: this._getHeaders()
+          }
+        );
         return this._handleResponse(e);
       }
       /**
@@ -166,11 +172,14 @@ var E = F((C, b) => {
        * @returns {Promise<Object>}
        */
       async addComment(t, e) {
-        const r = await fetch(`${this.baseUrl}/features/${t}/comments`, {
-          method: "POST",
-          headers: this._getHeaders(),
-          body: JSON.stringify({ text: e })
-        });
+        const r = await fetch(
+          `${this.baseUrl}/features/${t}/comments`,
+          {
+            method: "POST",
+            headers: this._getHeaders(),
+            body: JSON.stringify({ text: e })
+          }
+        );
         return this._handleResponse(r);
       }
       /**

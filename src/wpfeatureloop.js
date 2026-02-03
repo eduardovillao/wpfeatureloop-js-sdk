@@ -141,7 +141,7 @@
       this.projectId = config.projectId;
       this.user = config.user;
       this.signature = config.signature;
-      this.baseUrl = config.apiUrl || "https://api.wpfeatureloop.com/api/v1";
+      this.baseUrl = config.apiUrl || "https://app.wpfeatureloop.com/api/v1";
     }
 
     /**
@@ -191,11 +191,14 @@
      * @returns {Promise<Object>}
      */
     async vote(featureId, voteType) {
-      const response = await fetch(`${this.baseUrl}/features/${featureId}/vote`, {
-        method: "POST",
-        headers: this._getHeaders(),
-        body: JSON.stringify({ vote: voteType }),
-      });
+      const response = await fetch(
+        `${this.baseUrl}/features/${featureId}/vote`,
+        {
+          method: "POST",
+          headers: this._getHeaders(),
+          body: JSON.stringify({ vote: voteType }),
+        },
+      );
       return this._handleResponse(response);
     }
 
@@ -205,10 +208,13 @@
      * @returns {Promise<Array>}
      */
     async getComments(featureId) {
-      const response = await fetch(`${this.baseUrl}/features/${featureId}/comments`, {
-        method: "GET",
-        headers: this._getHeaders(),
-      });
+      const response = await fetch(
+        `${this.baseUrl}/features/${featureId}/comments`,
+        {
+          method: "GET",
+          headers: this._getHeaders(),
+        },
+      );
       return this._handleResponse(response);
     }
 
@@ -219,11 +225,14 @@
      * @returns {Promise<Object>}
      */
     async addComment(featureId, text) {
-      const response = await fetch(`${this.baseUrl}/features/${featureId}/comments`, {
-        method: "POST",
-        headers: this._getHeaders(),
-        body: JSON.stringify({ text }),
-      });
+      const response = await fetch(
+        `${this.baseUrl}/features/${featureId}/comments`,
+        {
+          method: "POST",
+          headers: this._getHeaders(),
+          body: JSON.stringify({ text }),
+        },
+      );
       return this._handleResponse(response);
     }
 
