@@ -1,5 +1,5 @@
 var F = (p, d) => () => (d || p((d = { exports: {} }).exports, d), d.exports);
-var q = F((C, b) => {
+var E = F((C, b) => {
   /**
    * WPFeatureLoop SDK
    * A feature voting widget for WordPress plugins
@@ -337,7 +337,7 @@ var q = F((C, b) => {
        * Render a feature card
        */
       renderCard(t) {
-        const e = t.votes > 0 ? "wfl-vote-positive" : t.votes < 0 ? "wfl-vote-negative" : "", r = t.userVote === "up", o = t.userVote === "down", i = t.commentsCount === 1 ? this.t.comment : this.t.comments;
+        const e = t.votes > 0 ? "wfl-vote-positive" : t.votes < 0 ? "wfl-vote-negative" : "", r = t.userVote === "up", o = t.userVote === "down", a = t.commentsCount === 1 ? this.t.comment : this.t.comments;
         return `
         <div class="wfl-card" data-id="${t.id}">
           <div class="wfl-vote">
@@ -364,7 +364,7 @@ var q = F((C, b) => {
             <div class="wfl-footer">
               <button class="wfl-meta wfl-comment-trigger" data-id="${t.id}">
                 ${c.comment}
-                <span>${t.commentsCount} ${i}</span>
+                <span>${t.commentsCount} ${a}</span>
               </button>
               ${(t.tags || []).map((s) => `<span class="wfl-tag">${s}</span>`).join("")}
             </div>
@@ -422,10 +422,6 @@ var q = F((C, b) => {
               <div class="wfl-form-group">
                 <label class="wfl-label" for="wfl-feature-desc">${this.t.descriptionLabel}</label>
                 <textarea class="wfl-textarea" id="wfl-feature-desc" placeholder="${this.t.descriptionPlaceholder}"></textarea>
-              </div>
-              <div class="wfl-form-group">
-                <label class="wfl-label" for="wfl-feature-tag">${this.t.categoryLabel}</label>
-                <input type="text" class="wfl-input" id="wfl-feature-tag" placeholder="${this.t.categoryPlaceholder}">
               </div>
             </div>
             <div class="wfl-modal-footer">
@@ -489,9 +485,9 @@ var q = F((C, b) => {
         t && t.addEventListener("click", () => this.openModal());
         const e = this.container.querySelector("#wfl-modal");
         if (e) {
-          const o = this.container.querySelector("#wfl-modal-close"), i = this.container.querySelector("#wfl-modal-cancel"), s = this.container.querySelector("#wfl-modal-submit");
-          o == null || o.addEventListener("click", () => this.closeModal()), i == null || i.addEventListener("click", () => this.closeModal()), e.addEventListener("click", (a) => {
-            a.target === e && this.closeModal();
+          const o = this.container.querySelector("#wfl-modal-close"), a = this.container.querySelector("#wfl-modal-cancel"), s = this.container.querySelector("#wfl-modal-submit");
+          o == null || o.addEventListener("click", () => this.closeModal()), a == null || a.addEventListener("click", () => this.closeModal()), e.addEventListener("click", (i) => {
+            i.target === e && this.closeModal();
           }), s == null || s.addEventListener(
             "click",
             () => this.handleSubmitFeature()
@@ -502,8 +498,8 @@ var q = F((C, b) => {
           const o = this.container.querySelector(
             "#wfl-comment-modal-close"
           );
-          o == null || o.addEventListener("click", () => this.closeCommentModal()), r.addEventListener("click", (i) => {
-            i.target === r && this.closeCommentModal();
+          o == null || o.addEventListener("click", () => this.closeCommentModal()), r.addEventListener("click", (a) => {
+            a.target === r && this.closeCommentModal();
           });
         }
         this.features.forEach((o) => this.attachCardListeners(o.id));
@@ -517,8 +513,8 @@ var q = F((C, b) => {
         );
         if (!e) return;
         e.querySelectorAll(".wfl-vote-btn").forEach((o) => {
-          o.addEventListener("click", (i) => {
-            i.stopPropagation(), this.handleVote(o);
+          o.addEventListener("click", (a) => {
+            a.stopPropagation(), this.handleVote(o);
           });
         });
         const r = e.querySelector(".wfl-comment-trigger");
@@ -538,66 +534,65 @@ var q = F((C, b) => {
        */
       closeModal() {
         const t = this.container.querySelector("#wfl-modal");
-        t && (t.classList.remove("wfl-active"), this.container.querySelector("#wfl-feature-title").value = "", this.container.querySelector("#wfl-feature-desc").value = "", this.container.querySelector("#wfl-feature-tag").value = "");
+        t && (t.classList.remove("wfl-active"), this.container.querySelector("#wfl-feature-title").value = "", this.container.querySelector("#wfl-feature-desc").value = "");
       }
       /**
        * Handle feature submission
        */
       async handleSubmitFeature() {
-        const t = this.container.querySelector("#wfl-feature-title").value.trim(), e = this.container.querySelector("#wfl-feature-desc").value.trim(), r = this.container.querySelector("#wfl-feature-tag").value.trim() || "General";
+        const t = this.container.querySelector("#wfl-feature-title").value.trim(), e = this.container.querySelector("#wfl-feature-desc").value.trim();
         if (!t || !e) {
           this.showToast(this.t.fillAllFields, "error");
           return;
         }
-        const o = this.container.querySelector("#wfl-modal-submit");
-        o.disabled = !0;
+        const r = this.container.querySelector("#wfl-modal-submit");
+        r.disabled = !0;
         try {
-          const i = await this.api.createFeature({
+          const o = await this.api.createFeature({
             title: t,
-            description: e,
-            category: r
+            description: e
           });
-          this.features.unshift(i), this.container.querySelector("#wfl-list").insertAdjacentHTML("afterbegin", this.renderCard(i)), this.attachCardListeners(i.id), this.closeModal(), this.showToast(this.t.featureSubmitted, "success");
-        } catch (i) {
-          console.error("WPFeatureLoop: Failed to create feature", i), this.showToast(this.t.errorText, "error");
+          this.features.unshift(o), this.container.querySelector("#wfl-list").insertAdjacentHTML("afterbegin", this.renderCard(o)), this.attachCardListeners(o.id), this.closeModal(), this.showToast(this.t.featureSubmitted, "success");
+        } catch (o) {
+          console.error("WPFeatureLoop: Failed to create feature", o), this.showToast(this.t.errorText, "error");
         } finally {
-          o.disabled = !1;
+          r.disabled = !1;
         }
       }
       /**
        * Open comments modal
        */
       async openCommentModal(t) {
-        const e = this.features.find((a) => a.id === t);
+        const e = this.features.find((i) => i.id === t);
         if (!e) return;
         this.currentCommentFeatureId = t;
-        const r = this.container.querySelector("#wfl-comment-modal"), o = this.container.querySelector("#wfl-comments-list"), i = this.container.querySelector("#wfl-comment-title"), s = this.container.querySelector("#wfl-comment-input");
-        s.value = "", i.textContent = e.title, o.innerHTML = '<div class="wfl-skeleton" style="height: 60px; margin-bottom: 12px;"></div>'.repeat(
+        const r = this.container.querySelector("#wfl-comment-modal"), o = this.container.querySelector("#wfl-comments-list"), a = this.container.querySelector("#wfl-comment-title"), s = this.container.querySelector("#wfl-comment-input");
+        s.value = "", a.textContent = e.title, o.innerHTML = '<div class="wfl-skeleton" style="height: 60px; margin-bottom: 12px;"></div>'.repeat(
           2
         ), r.classList.add("wfl-active");
         try {
           this.currentComments = await this.api.getComments(t), o.innerHTML = this.renderCommentsList(this.currentComments);
-          const a = this, u = async () => {
-            const n = a.container.querySelector("#wfl-comment-input"), k = a.container.querySelector("#wfl-comment-submit"), $ = n.value.trim();
-            if ($) {
+          const i = this, u = async () => {
+            const n = i.container.querySelector("#wfl-comment-input"), k = i.container.querySelector("#wfl-comment-submit"), L = n.value.trim();
+            if (L) {
               k.disabled = !0;
               try {
-                const g = await a.api.addComment(t, $);
-                a.currentComments.push(g), o.innerHTML = a.renderCommentsList(
-                  a.currentComments
-                ), e.commentsCount = a.currentComments.length;
-                const x = a.container.querySelector(
+                const g = await i.api.addComment(t, L);
+                i.currentComments.push(g), o.innerHTML = i.renderCommentsList(
+                  i.currentComments
+                ), e.commentsCount = i.currentComments.length;
+                const x = i.container.querySelector(
                   `.wfl-card[data-id="${t}"]`
-                ), L = x == null ? void 0 : x.querySelector(
+                ), $ = x == null ? void 0 : x.querySelector(
                   ".wfl-comment-trigger span"
                 );
-                if (L) {
-                  const T = e.commentsCount === 1 ? a.t.comment : a.t.comments;
-                  L.textContent = `${e.commentsCount} ${T}`;
+                if ($) {
+                  const T = e.commentsCount === 1 ? i.t.comment : i.t.comments;
+                  $.textContent = `${e.commentsCount} ${T}`;
                 }
-                n.value = "", a.showToast(a.t.commentAdded, "success");
+                n.value = "", i.showToast(i.t.commentAdded, "success");
               } catch (g) {
-                console.error("WPFeatureLoop: Failed to add comment", g), a.showToast(a.t.errorText, "error");
+                console.error("WPFeatureLoop: Failed to add comment", g), i.showToast(i.t.errorText, "error");
               } finally {
                 k.disabled = !1;
               }
@@ -608,8 +603,8 @@ var q = F((C, b) => {
           h.parentNode.replaceChild(f, h), f.addEventListener("keypress", (n) => {
             n.key === "Enter" && u();
           });
-        } catch (a) {
-          console.error("WPFeatureLoop: Failed to load comments", a), o.innerHTML = `<p style="text-align: center; color: var(--wfl-danger);">${this.t.errorText}</p>`;
+        } catch (i) {
+          console.error("WPFeatureLoop: Failed to load comments", i), o.innerHTML = `<p style="text-align: center; color: var(--wfl-danger);">${this.t.errorText}</p>`;
         }
       }
       /**
@@ -629,18 +624,18 @@ var q = F((C, b) => {
       async handleVote(t) {
         const e = t.dataset.id, r = t.dataset.action, o = this.features.find((n) => String(n.id) === String(e));
         if (!o) return;
-        const i = this.container.querySelector(`.wfl-card[data-id="${e}"]`), s = i.querySelector(".wfl-vote-count"), a = i.querySelector(".wfl-vote-up"), u = i.querySelector(".wfl-vote-down");
-        a.disabled = !0, u.disabled = !0;
+        const a = this.container.querySelector(`.wfl-card[data-id="${e}"]`), s = a.querySelector(".wfl-vote-count"), i = a.querySelector(".wfl-vote-up"), u = a.querySelector(".wfl-vote-down");
+        i.disabled = !0, u.disabled = !0;
         const m = o.votes, h = o.userVote;
         let l = "none", f = 0;
-        r === "up" ? o.userVote === "up" ? (f = -1, l = "none") : o.userVote === "down" ? (f = 2, l = "up") : (f = 1, l = "up") : o.userVote === "down" ? (f = 1, l = "none") : o.userVote === "up" ? (f = -2, l = "down") : (f = -1, l = "down"), o.votes += f, o.userVote = l === "none" ? null : l, a.classList.toggle("wfl-voted", o.userVote === "up"), u.classList.toggle("wfl-voted", o.userVote === "down"), s.textContent = o.votes, s.classList.remove("wfl-vote-positive", "wfl-vote-negative"), o.votes > 0 ? s.classList.add("wfl-vote-positive") : o.votes < 0 && s.classList.add("wfl-vote-negative"), s.classList.add("wfl-animating"), setTimeout(() => s.classList.remove("wfl-animating"), 300), r === "up" && l === "up" && this.createConfetti(a);
+        r === "up" ? o.userVote === "up" ? (f = -1, l = "none") : o.userVote === "down" ? (f = 2, l = "up") : (f = 1, l = "up") : o.userVote === "down" ? (f = 1, l = "none") : o.userVote === "up" ? (f = -2, l = "down") : (f = -1, l = "down"), o.votes += f, o.userVote = l === "none" ? null : l, i.classList.toggle("wfl-voted", o.userVote === "up"), u.classList.toggle("wfl-voted", o.userVote === "down"), s.textContent = o.votes, s.classList.remove("wfl-vote-positive", "wfl-vote-negative"), o.votes > 0 ? s.classList.add("wfl-vote-positive") : o.votes < 0 && s.classList.add("wfl-vote-negative"), s.classList.add("wfl-animating"), setTimeout(() => s.classList.remove("wfl-animating"), 300), r === "up" && l === "up" && this.createConfetti(i);
         try {
           const n = await this.api.vote(e, l);
           o.votes = n.totalVotes, o.userVote = n.vote, s.textContent = o.votes, s.classList.remove("wfl-vote-positive", "wfl-vote-negative"), o.votes > 0 ? s.classList.add("wfl-vote-positive") : o.votes < 0 && s.classList.add("wfl-vote-negative");
         } catch (n) {
-          console.error("WPFeatureLoop: Failed to save vote", n), o.votes = m, o.userVote = h, a.classList.toggle("wfl-voted", o.userVote === "up"), u.classList.toggle("wfl-voted", o.userVote === "down"), s.textContent = o.votes, s.classList.remove("wfl-vote-positive", "wfl-vote-negative"), o.votes > 0 ? s.classList.add("wfl-vote-positive") : o.votes < 0 && s.classList.add("wfl-vote-negative"), this.showToast(this.t.errorText, "error");
+          console.error("WPFeatureLoop: Failed to save vote", n), o.votes = m, o.userVote = h, i.classList.toggle("wfl-voted", o.userVote === "up"), u.classList.toggle("wfl-voted", o.userVote === "down"), s.textContent = o.votes, s.classList.remove("wfl-vote-positive", "wfl-vote-negative"), o.votes > 0 ? s.classList.add("wfl-vote-positive") : o.votes < 0 && s.classList.add("wfl-vote-negative"), this.showToast(this.t.errorText, "error");
         } finally {
-          a.disabled = !1, u.disabled = !1;
+          i.disabled = !1, u.disabled = !1;
         }
       }
       /**
@@ -649,8 +644,8 @@ var q = F((C, b) => {
       createConfetti(t) {
         const e = ["#6366f1", "#8b5cf6", "#ec4899", "#10b981", "#f59e0b"], r = t.getBoundingClientRect();
         for (let o = 0; o < 6; o++) {
-          const i = document.createElement("div");
-          i.className = "wfl-confetti", i.style.left = `${r.left + r.width / 2 + (Math.random() - 0.5) * 30}px`, i.style.top = `${r.top + r.height / 2}px`, i.style.background = e[Math.floor(Math.random() * e.length)], i.style.position = "fixed", document.body.appendChild(i), setTimeout(() => i.remove(), 600);
+          const a = document.createElement("div");
+          a.className = "wfl-confetti", a.style.left = `${r.left + r.width / 2 + (Math.random() - 0.5) * 30}px`, a.style.top = `${r.top + r.height / 2}px`, a.style.background = e[Math.floor(Math.random() * e.length)], a.style.position = "fixed", document.body.appendChild(a), setTimeout(() => a.remove(), 600);
         }
       }
       /**
@@ -692,5 +687,5 @@ var q = F((C, b) => {
     }, v.version = "1.1.0", v;
   });
 });
-export default q();
+export default E();
 //# sourceMappingURL=wpfeatureloop.es.js.map
