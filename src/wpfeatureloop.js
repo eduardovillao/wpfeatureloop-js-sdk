@@ -557,10 +557,6 @@
                 <label class="wfl-label" for="wfl-feature-desc">${this.t.descriptionLabel}</label>
                 <textarea class="wfl-textarea" id="wfl-feature-desc" placeholder="${this.t.descriptionPlaceholder}"></textarea>
               </div>
-              <div class="wfl-form-group">
-                <label class="wfl-label" for="wfl-feature-tag">${this.t.categoryLabel}</label>
-                <input type="text" class="wfl-input" id="wfl-feature-tag" placeholder="${this.t.categoryPlaceholder}">
-              </div>
             </div>
             <div class="wfl-modal-footer">
               <button class="wfl-btn wfl-btn-secondary" id="wfl-modal-cancel">${this.t.cancel}</button>
@@ -713,7 +709,6 @@
         modal.classList.remove("wfl-active");
         this.container.querySelector("#wfl-feature-title").value = "";
         this.container.querySelector("#wfl-feature-desc").value = "";
-        this.container.querySelector("#wfl-feature-tag").value = "";
       }
     }
 
@@ -727,9 +722,6 @@
       const description = this.container
         .querySelector("#wfl-feature-desc")
         .value.trim();
-      const category =
-        this.container.querySelector("#wfl-feature-tag").value.trim() ||
-        "General";
 
       if (!title || !description) {
         this.showToast(this.t.fillAllFields, "error");
@@ -743,7 +735,6 @@
         const newFeature = await this.api.createFeature({
           title,
           description,
-          category,
         });
         this.features.unshift(newFeature);
 
