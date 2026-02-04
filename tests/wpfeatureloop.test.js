@@ -278,7 +278,7 @@ describe("WPFeatureLoop Initialization", () => {
       ...defaultConfig,
       locale: "unknown",
     });
-    expect(wfl.t.title).toBe("Feature Roadmap");
+    expect(wfl.t.title).toBe("What's Next?");
   });
 
   it("should have version property", () => {
@@ -326,7 +326,7 @@ describe("WPFeatureLoop Rendering", () => {
 
     const title = container.querySelector(".wfl-title");
     expect(title).not.toBeNull();
-    expect(title.textContent).toBe("Feature Roadmap");
+    expect(title.textContent).toBe("What's Next?");
   });
 
   it("should render header with Portuguese title", async () => {
@@ -338,7 +338,7 @@ describe("WPFeatureLoop Rendering", () => {
     await waitForLoad(container);
 
     const title = container.querySelector(".wfl-title");
-    expect(title.textContent).toBe("Roadmap de Features");
+    expect(title.textContent).toBe("O que vem por aí?");
   });
 
   it("should render suggest button for allowed roles", async () => {
@@ -937,7 +937,7 @@ describe("WPFeatureLoop Translations", () => {
     await wfl.init();
     await waitForLoad(document.getElementById("wfl-test"));
 
-    expect(wfl.t.title).toBe("Feature Roadmap");
+    expect(wfl.t.title).toBe("What's Next?");
     expect(wfl.t.suggestFeature).toBe("Suggest Feature");
   });
 
@@ -950,7 +950,7 @@ describe("WPFeatureLoop Translations", () => {
     await wfl.init();
     await waitForLoad(document.getElementById("wfl-test"));
 
-    expect(wfl.t.title).toBe("Roadmap de Features");
+    expect(wfl.t.title).toBe("O que vem por aí?");
     expect(wfl.t.suggestFeature).toBe("Sugerir Feature");
   });
 
