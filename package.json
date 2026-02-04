@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run build:css",
+    "build": "npm run inject-styles && vite build && npm run build:css",
+    "inject-styles": "node scripts/inject-styles.js",
     "build:css": "lightningcss --minify --bundle src/wpfeatureloop.css -o dist/wpfeatureloop.min.css && cp src/wpfeatureloop.css dist/wpfeatureloop.css",
     "test": "vitest",
     "test:run": "vitest run",
