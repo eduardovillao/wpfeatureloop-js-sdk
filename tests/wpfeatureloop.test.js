@@ -316,7 +316,7 @@ describe("WPFeatureLoop Rendering", () => {
     wfl.renderSkeleton();
 
     expect(container.querySelector(".wfl-skeleton")).not.toBeNull();
-    expect(container.querySelectorAll(".wfl-skeleton-card").length).toBe(3);
+    expect(container.querySelectorAll(".wfl-skeleton-card").length).toBe(1);
   });
 
   it("should render header with title", async () => {
@@ -349,18 +349,6 @@ describe("WPFeatureLoop Rendering", () => {
     const btn = container.querySelector("#wfl-add-feature");
     expect(btn).not.toBeNull();
     expect(btn.textContent).toContain("Suggest Feature");
-  });
-
-  it("should hide suggest button for non-allowed roles", async () => {
-    const wfl = new WPFeatureLoop({
-      ...defaultConfig,
-      userRole: "subscriber",
-    });
-    await wfl.init();
-    await waitForLoad(container);
-
-    const btn = container.querySelector("#wfl-add-feature");
-    expect(btn).toBeNull();
   });
 
   it("should render feature cards", async () => {
@@ -840,15 +828,8 @@ describe("WPFeatureLoop Public API", () => {
     expect(container.classList.contains("wfl-container")).toBe(false);
   });
 
-  it("should check canCreateFeature() based on role", () => {
+  it("should always allow creating features", () => {
     expect(wfl.canCreateFeature()).toBe(true);
-
-    const wfl2 = new WPFeatureLoop({
-      ...defaultConfig,
-      container: "#wfl-test",
-      userRole: "subscriber",
-    });
-    expect(wfl2.canCreateFeature()).toBe(false);
   });
 });
 

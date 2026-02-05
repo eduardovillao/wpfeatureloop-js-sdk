@@ -213,8 +213,6 @@ var q = F((C, b) => {
        * @param {string} [config.user.plan] - User plan (free, pro, etc)
        * @param {Object} [config.user.meta] - Additional user metadata
        * @param {string} [config.signature] - HMAC signature for user data
-       * @param {Array<string>} [config.allowedRoles] - Roles allowed to create features
-       * @param {string} [config.userRole] - Current user's role
        * @param {string} [config.apiUrl] - Custom API URL
        */
       constructor(t) {
@@ -227,13 +225,13 @@ var q = F((C, b) => {
           throw new Error("WPFeatureLoop: projectId is required");
         if (!((e = t.user) != null && e.id))
           throw new Error("WPFeatureLoop: user.id is required");
-        this.locale = t.locale || "en", this.t = y[this.locale] || y.en, this.allowedRoles = t.allowedRoles || ["administrator"], this.userRole = t.userRole || "subscriber", this.api = new S(t);
+        this.locale = t.locale || "en", this.t = y[this.locale] || y.en, this.api = new S(t);
       }
       /**
        * Check if current user can create features
        */
       canCreateFeature() {
-        return this.allowedRoles.includes(this.userRole);
+        return !0;
       }
       /**
        * Initialize the widget
@@ -254,7 +252,7 @@ var q = F((C, b) => {
        * Render skeleton loading state
        */
       renderSkeleton() {
-        const t = Array(3).fill(0).map(
+        const t = Array(1).fill(0).map(
           () => `
         <div class="wfl-skeleton-card">
           <div class="wfl-skeleton-vote">

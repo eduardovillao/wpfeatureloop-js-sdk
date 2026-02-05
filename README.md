@@ -10,9 +10,8 @@ A feature voting widget SDK for WordPress plugins. Allow your users to view, sug
 
 - **Feature Voting** - Upvote/downvote features with optimistic UI updates and confetti animations
 - **Comments** - Users can discuss and comment on specific features
-- **Feature Suggestions** - Authorized users can submit new feature requests
+- **Feature Suggestions** - Users can submit new feature requests
 - **Status Tracking** - Display feature lifecycle (Open, Planned, In Progress, Completed)
-- **Role-based Access** - Control which user roles can suggest features
 - **Multi-language** - Built-in support for English and Portuguese (pt-BR)
 - **Zero Dependencies** - Pure vanilla JavaScript, no runtime dependencies
 - **Lightweight** - Small bundle size, optimized for performance
@@ -95,8 +94,6 @@ const widget = WPFeatureLoop.init({
 | `user.plan`    | `string`         | No       | -                   | User's subscription plan (free, pro, etc.)  |
 | `user.meta`    | `object`         | No       | -                   | Additional user metadata                    |
 | `locale`       | `string`         | No       | `'en'`              | Language (`'en'` or `'pt-BR'`)              |
-| `userRole`     | `string`         | No       | `'subscriber'`      | Current user's WordPress role               |
-| `allowedRoles` | `string[]`       | No       | `['administrator']` | Roles allowed to create features            |
 | `signature`    | `string`         | No       | -                   | HMAC signature for secure user verification |
 | `apiUrl`       | `string`         | No       | -                   | Custom API URL (for self-hosted)            |
 
@@ -117,8 +114,6 @@ const widget = WPFeatureLoop.init({
         },
     },
     locale: "en",
-    userRole: "administrator",
-    allowedRoles: ["administrator", "editor"],
     signature: "hmac_signature_here",
 });
 ```
@@ -160,7 +155,7 @@ widget.destroy();
 
 ### `widget.canCreateFeature()`
 
-Returns whether the current user can create new features.
+Returns `true`. Access control should be handled server-side (e.g., WordPress `current_user_can()`).
 
 ```javascript
 if (widget.canCreateFeature()) {
@@ -190,34 +185,34 @@ The widget uses CSS custom properties for easy theming. Override these variables
 ```css
 .wfl-container {
     /* Primary colors */
-    --wfl-primary: #6366f1;
-    --wfl-primary-hover: #4f46e5;
-    --wfl-primary-light: #eef2ff;
+    --wfl-primary: #3b82f6;
+    --wfl-primary-hover: #2563eb;
+    --wfl-primary-light: #eff6ff;
 
     /* Status colors */
     --wfl-success: #10b981;
     --wfl-warning: #f59e0b;
     --wfl-danger: #ef4444;
 
-    /* Gray scale */
-    --wfl-gray-50: #f9fafb;
-    --wfl-gray-100: #f3f4f6;
-    --wfl-gray-200: #e5e7eb;
-    --wfl-gray-300: #d1d5db;
-    --wfl-gray-400: #9ca3af;
-    --wfl-gray-500: #6b7280;
-    --wfl-gray-600: #4b5563;
-    --wfl-gray-700: #374151;
-    --wfl-gray-800: #1f2937;
-    --wfl-gray-900: #111827;
+    /* Gray scale (Slate) */
+    --wfl-gray-50: #f8fafc;
+    --wfl-gray-100: #f1f5f9;
+    --wfl-gray-200: #e2e8f0;
+    --wfl-gray-300: #cbd5e1;
+    --wfl-gray-400: #94a3b8;
+    --wfl-gray-500: #64748b;
+    --wfl-gray-600: #475569;
+    --wfl-gray-700: #334155;
+    --wfl-gray-800: #1e293b;
+    --wfl-gray-900: #0f172a;
 
     /* Typography */
     --wfl-font-family:
         -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
     /* Borders */
-    --wfl-radius: 12px;
-    --wfl-radius-sm: 8px;
+    --wfl-radius: 10px;
+    --wfl-radius-lg: 14px;
 
     /* Shadows */
     --wfl-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);

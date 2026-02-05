@@ -271,8 +271,6 @@
      * @param {string} [config.user.plan] - User plan (free, pro, etc)
      * @param {Object} [config.user.meta] - Additional user metadata
      * @param {string} [config.signature] - HMAC signature for user data
-     * @param {Array<string>} [config.allowedRoles] - Roles allowed to create features
-     * @param {string} [config.userRole] - Current user's role
      * @param {string} [config.apiUrl] - Custom API URL
      */
     constructor(config) {
@@ -301,8 +299,6 @@
       // Set defaults
       this.locale = config.locale || "en";
       this.t = translations[this.locale] || translations["en"];
-      this.allowedRoles = config.allowedRoles || ["administrator"];
-      this.userRole = config.userRole || "subscriber";
 
       // Initialize API service
       this.api = new ApiService(config);
@@ -312,7 +308,7 @@
      * Check if current user can create features
      */
     canCreateFeature() {
-      return this.allowedRoles.includes(this.userRole);
+      return true;
     }
 
     /**
@@ -346,7 +342,7 @@
      * Render skeleton loading state
      */
     renderSkeleton() {
-      const skeletonCards = Array(3)
+      const skeletonCards = Array(1)
         .fill(0)
         .map(
           () => `
